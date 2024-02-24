@@ -1,16 +1,16 @@
 console.log("Hi")
 const fs = require('fs');
 function readFileAsync(filePath) {
+  return new Promise((resolve,reject)=>{
     fs.readFile(filePath, 'utf8', (err, data) => {
       if (err) {
-        console.error(`Error reading file from disk: ${err}`);
+        reject(`Error reading file from disk: ${err}`);
       } else {
-        console.log(data);
+        resolve(data);
       }
     });
+  });   
   }
-  const data = "Hello, this is a test file.";
-
 // Asynchronously writing data to a file
 function writeFileAsync(inputString,path){
     fs.writeFile(path, inputString, 'utf8', (err) => {
@@ -21,5 +21,27 @@ function writeFileAsync(inputString,path){
         }
       });
 }
-writeFileAsync("testing testing",'C:/Users/matej/VSE/.js/test.js.txt')
+async function parseSettings(){
+  try{
+    var source = await readFileAsync('C:/Users/matej/VSE/.js/settings.txt');
+    var inputLoc = source.split(";")[0].split(":")[1];
+    var target = source.split(";")[1].split(":")[1];
+    try{var inputText = await readFileAsync(inputLoc)
+      console.log(inputLoc);
+      writeFileAsync(inputText,target);
+      console.log(inputText);
+    }catch(err){
+      console.log("File not found")
+    }
+  
+  }catch(err){
+
+  }
+  
+  //
+  
+ // console.log(target)
+}
+parseSettings();
+//writeFileAsync("testing testing",'C:/Users/matej/VSE/.js/test.js.txt')
 
