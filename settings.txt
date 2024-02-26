@@ -1,2 +1,2 @@
-source:./test.txt;
+source:./input.txt;
 target:./out.txt
