@@ -19,7 +19,7 @@ import util from 'util';
     }
    async function fin(){
         try{
-         var out = promiseFactory("Week3\\output\\",5);
+         var out = promiseFactory("Week3\\",5);
          Promise.all(await out).then((values) => {
             console.log(values)});
         }catch(err){
