@@ -1,0 +1,19 @@
+{
+  "name": "week4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Week4.mjs",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon Week4/Week4.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
