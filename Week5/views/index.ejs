@@ -10,22 +10,36 @@
 <h1><%= title %></h1>
 
 <ul>
-<% for (const todo of todos) { %>
-  <li>
-    <a href="/todo/<%= todo.id %>"><%= todo.title %></a> 
-    <a href="/remove-todo/<%= todo.id %>">odebrat</a>
-    <a href="/toggle-todo/<%= todo.id %>"><%= todo.done ? 'hotovo' : 'nehotvo' %></a>
-     </a>
-  </li>
-<% } %>
-</ul>
+  <% for (const todo of todos) { %>
+    <li>
+      <a href="/todo/<%= todo.id %>"><%= todo.title %></a>
+      - Priority: 
+      <% if (todo.priority === 1) { %>
+        Low
+      <% } else if (todo.priority === 2) { %>
+        Normal
+      <% } else if (todo.priority === 3) { %>
+        High
+      <% } %>
+      - <a href="/remove-todo/<%= todo.id %>">odebrat</a>
+      - <a href="/toggle-todo/<%= todo.id %>"><%= todo.done ? 'hotovo' : 'nehotvo' %></a>
+    </li>
+  <% } %>
 
-<form method="post" action="/add-todo">
-  <input
-    placeholder="Název todočka"
-    name="title">
-  <button type="submit">Přidat</button>
-</form>
+  </ul>
+  <form method="post" action="/add-todo">
+    <input
+      placeholder="Název todočka"
+      name="title">
+    <select name="priority">
+      <option value="1">Low</option>
+      <option value="2" selected>Normal</option>
+      <option value="3">High</option>
+    </select>
+    <button type="submit">Přidat</button>
+  </form>
+
+  
 
 
 </body>
