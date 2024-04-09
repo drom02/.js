@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo Detail</title>
-</head>
-<body>
-
+<!-- Form to change title -->
+<table>
 <h1><%= todo.title %></h1>
 <p>Status: <%= todo.done ? 'Hotovo' : 'Nehotovo' %></p>
 
-<!-- Link to toggle status -->
-<a href="/toggle-todo/<%= todo.id %>">Změnit stav</a>
+<a href="/toggle-todo/<%= todo.id %>">Změnit stav </a>
+<a href="/remove-todo/<%= todo.id %>">Odstranit </a>
 
-<!-- Link to remove todo -->
-<a href="/remove-todo/<%= todo.id %>">Odstranit</a>
-
-<!-- Form to change title -->
 <form method="post" action="/update-todo/<%= todo.id %>">
   <input type="text" name="title" value="<%= todo.title %>" placeholder="Změnit titulek todočka">
   <select name="priority">
@@ -27,9 +16,6 @@
   <button type="submit">Upravit</button>
 </form>
 <a href="/" class="btn">Back to Main Page</a>
+</table>
 <!-- Existing form elements -->
 <!-- Priority selector -->
-
-
-</body>
-</html>

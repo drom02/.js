@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo Detail</title>
+</head>
+<script> 
+const ws = new WebSocket('ws://localhost:3000')
+ws.onmessage = (event) => {
+  const message = JSON.parse(event.data);
+  console.log("received");
+  if (message.type === 'todoDetail' && window.location.pathname === `/todo/${message.todoId}`) {
+    document.getElementById('todos_details').innerHTML = message.html;
+  } else if (message.type === 'todoDeleted') {
+    console.log("deleted");
+    if (window.location.pathname === `/todo/${message.todoId}`) {
+      document.getElementById('todos_details').innerHTML = '<p>Toto todočko bylo smazáno.</p>';
+    }
+  }
+};</script>
+<body>
+  
+
+<div id="todos_details">
+	<%- include('_todo_detail') %>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<script>
+  const ws = new WebSocket('ws://localhost:3000')
+
+  ws.addEventListener('message', (message) => {
+    const json = JSON.parse(message.data)
+
+    if (json.type === 'todos') {
+      document.getElementById('todos').innerHTML = json.html
+    }
+  })
+  ws.onmessage = (event) => {
+  const message = JSON.parse(event.data);
+  console.log("received");
+  if (message.type === 'todoDetail' && window.location.pathname === `/todo/${message.todoId}`) {
+    document.getElementById('todos_details').innerHTML = message.html;
+  } else if (message.type === 'todoDeleted') {
+    console.log("deleted");
+    if (window.location.pathname === `/todo/${message.todoId}`) {
+      document.getElementById('todos_details').innerHTML = '<p>Toto todočko bylo smazáno.</p>';
+    }
+  }
+};
+</script>
+</body>
+</html>
+
+<body>
+
+<h1><%= title %></h1>
+
+<div id="todos">
+	<%- include('_todos') %>
+</div>
+
+  <form method="post" action="/add-todo">
+    <input
+      placeholder="Název todočka"
+      name="title">
+    <select name="priority">
+      <option value="1">Low</option>
+      <option value="2" selected>Normal</option>
+      <option value="3">High</option>
+    </select>
+    <button type="submit">Přidat</button>
+  </form>
+
+  
+
+
+</body>
+</html>
