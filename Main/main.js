@@ -60,7 +60,7 @@ app.get('/remove-todo/:id', async (req, res,next) => {
   const todo = await db('todos').select('*').where('id', req.params.id).first()
   if (!todo) return next();
   deleteTodo(todo,res);
-  
+  res.redirect('/')
 })
 //Change state
 app.get('/toggle-todo/:id', async (req, res, next) => {

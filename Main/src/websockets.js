@@ -60,11 +60,11 @@ export const createWebSocketServer = (server) => {
     }
     
   };
-  export const deleteTodo = async (todo,res) => {
+  export const deleteTodo = async (todo) => {
   await db('todos').delete().where('id', todo.id)
   sendTodosToAllConnections()
   const message = JSON.stringify({ type: 'todoDeleted', todoId: todo.id });
   connections.forEach(connection => connection.send(message));
-  res.redirect('/')
+  
   }
   
