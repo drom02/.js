@@ -16,17 +16,7 @@ export const createWebSocketServer = (server) => {
   
         console.log('Closed connection', connections.size)
       })
-      ws.onmessage = (event) => {
-        const message = JSON.parse(event.data);
-        
-        if (message.type === 'todoDetail' && window.location.pathname === `/todo/${message.todoId}`) {
-          document.getElementById('todos_details').innerHTML = message.html;
-        } else if (message.type === 'todoDeleted') {
-          if (window.location.pathname === `/todo/${message.todoId}`) {
-            document.getElementById('todos_details').innerHTML = '<p>Toto todočko bylo smazáno.</p>';
-          }
-        }
-      };
+     
     })
     
   }
@@ -68,4 +58,13 @@ export const createWebSocketServer = (server) => {
     for (const connection of connections) {
       connection.send(json);
     }
+    
   };
+  export const deleteTodo = async (todo,res) => {
+  await db('todos').delete().where('id', todo.id)
+  sendTodosToAllConnections()
+  const message = JSON.stringify({ type: 'todoDeleted', todoId: todo.id });
+  connections.forEach(connection => connection.send(message));
+  res.redirect('/')
+  }
+  

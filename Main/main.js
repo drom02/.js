@@ -2,7 +2,7 @@ import express from 'express'
 import knex from 'knex'
 import knexfile from './knexfile.js'
 import  { db,getAllTodos } from './src/db.js'
-import { createWebSocketServer, sendTodosToAllConnections,connections, sendTodoDetail } from './src/websockets.js'
+import { createWebSocketServer, sendTodosToAllConnections,connections, sendTodoDetail,deleteTodo } from './src/websockets.js'
 const port = 3000;
 const app = express();
 
@@ -56,15 +56,11 @@ app.post('/update-todo/:id', async (req, res, next) => {
   res.redirect('back')
 })
 //Remove
-app.get('/remove-todo/:id', async (req, res) => {
+app.get('/remove-todo/:id', async (req, res,next) => {
   const todo = await db('todos').select('*').where('id', req.params.id).first()
-  if (!todo) return next()
-
-  await db('todos').delete().where('id', todo.id)
-  sendTodosToAllConnections()
-  const message = JSON.stringify({ type: 'todoDeleted', todoId: todo.id });
-  connections.forEach(connection => connection.send(message));
-  res.redirect('/')
+  if (!todo) return next();
+  deleteTodo(todo,res);
+  
 })
 //Change state
 app.get('/toggle-todo/:id', async (req, res, next) => {
