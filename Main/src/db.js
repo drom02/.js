@@ -2,7 +2,8 @@ import knex from 'knex'
 
 import knexfile from '../knexfile.js'
 
-export const db = knex(knexfile)
+//export const db = knex(knexfile)
+export const db = knex(knexfile[env])
 
 // Nebo pouze 'export' takzvaný jmenný export
 // Jmenný export se importuje takto:
