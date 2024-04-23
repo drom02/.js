@@ -84,9 +84,3 @@ app.use((err, req, res, next) => {
   res.send('500 - Chyba na straně serveru')
 })
 
-const server = app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`)
-})
-
-
-createWebSocketServer(server)
